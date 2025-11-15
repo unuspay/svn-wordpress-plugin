@@ -1,0 +1,322 @@
+@charset "UTF-8";
+
+:root {
+    --font-title-large: 36px;
+    --font-title-small: 24px;
+    --font-body: 16px;
+    --font-label: 12px;
+    --ap-black: #000000;
+    --ap-black-80: #2c3338;
+    --ap-white: #ffffff;
+    --ap-white-off: #f9f9f6;
+    --ap-gray: #dcdcde;
+    --ap-gray-0: #F6F7F7;
+    --ap-gray-5: #dcdcde;
+    --ap-gray-10: #c3c4c7;
+    --ap-gray-20: #A7AAAD;
+    --ap-gray-30: #8c8f94;
+    --ap-gray-40: #787C82;
+    --ap-gray-50: #646970;
+    --ap-gray-60: #50575E;
+    --ap-gray-70: #3c434a;
+    --ap-gray-80: #2C3338;
+    --ap-gray-90: #1d2327;
+    --ap-gray-100: #101517;
+    --ap-gray-off: #e2e2df;
+    --ap-yellow-10: #f2cf75;
+    --ap-red-0: #F7EBEC;
+    --ap-red-50: #D63638;
+    --ap-red-60: #B32D2E;
+    --ap-red-80: #8A2424;
+    --ap-red: #d63639;
+    --ap-pink: #C9356E;
+    --ap-green-0: #f0f2eb;
+    --ap-green-5: #d0e6b8;
+    --ap-green-10: #9dd977;
+    --ap-green-20: #64ca43;
+    --ap-green-30: #2fb41f;
+    --ap-green-40: #069e08;
+    --ap-green-50: #008710;
+    --ap-green-60: #007117;
+    --ap-green-70: #005b18;
+    --ap-green-80: #004515;
+    --ap-green-90: #003010;
+    --ap-green-100: #001c09;
+    --ap-green: #069e08;
+    --ap-green-primary: var(--ap-green-40);
+    --ap-green-secondary: var(--ap-green-30);
+    --ap-border-radius: 4px;
+    --ap-menu-border-height: 1px;
+    --ap-underline-thickness: 2px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+}
+
+.ap-banner-cta-button {
+    background: #000;
+    border-color: #000;
+    color: #fff;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0;
+    outline: 0;
+    overflow: hidden;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    box-sizing: border-box;
+    padding: 0.625rem 1.5rem;
+    transition: all 150ms ease-in-out;
+    text-decoration: none;
+}
+
+@media (max-width: 480px) {
+    .ap-banner-cta-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.ap-banner-cta-button:hover,
+.ap-banner-cta-button:active {
+    background: var(--ap-gray-80);
+    border-color: var(--ap-gray-80);
+    color: var(--ap-white);
+}
+
+.ap-banner-cta-button:focus {
+    color: #fff;
+    box-shadow: none;
+    outline: solid 1px var(--ap-black);
+    outline-offset: 1px;
+}
+
+.ap-connection-banner {
+    box-sizing: border-box;
+    display: block;
+    margin: 3rem 1.25rem 1.25rem 0;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.03), 0px 1px 2px rgba(0, 0, 0, 0.03);
+    border: 1px solid #d5d5d5;
+    position: relative;
+}
+
+.ap-connection-banner__dismiss{
+    position: absolute;
+    top: 0;
+    right: 1px;
+    border: none;
+    margin: 0;
+    padding: 9px;
+    background: 0 0;
+    color: #787c82;
+    cursor: pointer;
+}
+
+.ap-connection-banner__dismiss::before {
+    background: 0 0;
+    color: #787c82;
+    content: "\f153";
+    display: block;
+    font: normal 16px/20px dashicons;
+    speak: never;
+    height: 20px;
+    text-align: center;
+    width: 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 1152px) {
+    .ap-connection-banner {
+        margin: 4rem 1.25rem 1.25rem 0;
+    }
+}
+
+@media (max-width: 782px) {
+    .ap-connection-banner {
+        margin: 4rem 12px 1.25rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .ap-connection-banner .notice-dismiss {
+        padding: 1rem;
+    }
+}
+
+.ap-connection-banner__inner {
+    display: grid;
+    grid-template-columns: minmax(auto, 750px) 500px;
+    justify-content: space-between;
+    min-height: 380px;
+    background: #fff;
+    overflow: hidden;
+}
+
+@media (max-width: 1152px) {
+    .ap-connection-banner__inner {
+        grid-template-columns: 100% 0%;
+    }
+}
+
+.ap-connection-banner__content {
+    display: inline-flex;
+    flex-direction: column;
+    padding: 2rem 4rem 2rem 3rem;
+}
+
+@media (max-width: 1152px) {
+    .ap-connection-banner__content {
+        padding: 2rem 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .ap-connection-banner__content {
+        padding: 2rem 1rem;
+    }
+}
+
+.ap-connection-banner__logo {
+    margin: 0 0 1.25rem;
+}
+
+.ap-connection-banner__title {
+    width: 70%;
+    margin: 0 0 2rem;
+    color: var(--ap-gray-80);
+    font-size: 1.8rem;
+    line-height: 2.1rem;
+}
+
+@media (max-width: 1400px) {
+    .ap-connection-banner__title {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .ap-connection-banner__title {
+        font-size: 1.4rem;
+        line-height: 1.7rem;
+    }
+}
+
+.ap-connection-banner__title--warning {
+    width: 100%;
+}
+
+.ap-connection-banner__warning-icon {
+    fill: #eec74f;
+    margin-left: -4px;
+    transform: translate(4px, 8px);
+}
+
+.ap-connection-banner__columns {
+    margin: 0 0 2rem;
+}
+
+@media (max-width: 480px) {
+    .ap-connection-banner__columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ap-connection-banner__rows {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 0 2rem;
+}
+
+.ap-connection-banner__text {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    color: var(--ap-gray-100);
+    letter-spacing: -0.02em;
+    white-space: pre-line;
+}
+
+.ap-connection-banner__text--caption {
+    margin-bottom: 1rem;
+    font-size: 0.75rem;
+}
+
+.ap-connection-banner__text a {
+    color: inherit;
+}
+
+.ap-connection-banner__step {
+    margin: 0 0 1rem;
+}
+
+.ap-connection-banner__footer {
+    display: block;
+    margin-top: auto;
+}
+
+.ap-connection-banner__image-container {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.ap-connection-banner__image-container picture{
+    display: inline-flex;
+    justify-content: center;
+    z-index: 10;
+}
+
+.ap-connection-banner__image-background {
+    position: absolute;
+    width: 150%;
+    left: -20%;
+}
+
+.ap-connection-banner__image {
+    width: 90%;
+}
+
+@media (max-width: 1400px) {
+    .ap-connection-banner__image {
+        width: 85%;
+    }
+}
+
+.ap-connection-banner__container-top-text {
+    padding: 1rem 1rem 1.5rem 2.25rem;
+    background: linear-gradient(90deg, #7C55E7 0%, #009FEC 100%);
+    color: white;
+    display: flex;
+    align-items: baseline;
+}
+
+.ap-connection-banner__container-top-text svg {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.625rem;
+    position: relative;
+    top: 7px;
+}
+
+.ap-connection-banner__container-top-text svg path {
+    fill: #fff;
+}
+
+.unuspay-usage-notice__dismiss:before {
+    color: white;
+}

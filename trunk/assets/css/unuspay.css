@@ -1,0 +1,20 @@
+.wc-unuspay-icons-container {
+  float: right;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  box-sizing: border-box;
+}
+
+.wc-unuspay-blockchain-icon {
+  margin-left: .25em;
+  max-height: 28px;
+}
+
+.wc-block-checkout__payment-method .wc-block-components-radio-control__label>span {
+  width: 95%;
+}
+
+label[for*="payment_method_unuspay_wc_payments"] {
+  width: 90%;
+}

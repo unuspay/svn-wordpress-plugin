@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="781px" height="754px" viewBox="0 0 781 754" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>block</title>
+    <defs>
+        <radialGradient cx="50%" cy="35.4896667%" fx="50%" fy="35.4896667%" r="67.4212079%" gradientTransform="translate(0.500000,0.354897),scale(1.000000,0.741606),rotate(90.000000),translate(-0.500000,-0.354897)" id="radialGradient-1">
+            <stop stop-color="#F600FF" offset="0%"></stop>
+            <stop stop-color="#E900FF" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+        <filter x="-51.3%" y="-38.1%" width="202.7%" height="176.1%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="50" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <radialGradient cx="50%" cy="52.6831656%" fx="50%" fy="52.6831656%" r="79.1346928%" gradientTransform="translate(0.500000,0.526832),scale(1.000000,0.744494),rotate(90.000000),translate(-0.500000,-0.526832)" id="radialGradient-3">
+            <stop stop-color="#00FFF4" offset="0%"></stop>
+            <stop stop-color="#00FF63" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+        <filter x="-89.5%" y="-66.7%" width="279.1%" height="233.3%" filterUnits="objectBoundingBox" id="filter-4">
+            <feGaussianBlur stdDeviation="50" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <radialGradient cx="50%" cy="52.6831656%" fx="50%" fy="52.6831656%" r="70.1458791%" gradientTransform="translate(0.500000,0.526832),scale(1.000000,0.740996),scale(1.000000,1.016290),translate(-0.500000,-0.526832)" id="radialGradient-5">
+            <stop stop-color="#0032FF" offset="0%"></stop>
+            <stop stop-color="#0017FF" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+        <filter x="-70.0%" y="-51.9%" width="240.1%" height="203.8%" filterUnits="objectBoundingBox" id="filter-6">
+            <feGaussianBlur stdDeviation="50" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <radialGradient cx="50%" cy="52.6831656%" fx="50%" fy="52.6831656%" r="79.5296548%" gradientTransform="translate(0.500000,0.526832),scale(1.000000,0.740797),rotate(90.000000),translate(-0.500000,-0.526832)" id="radialGradient-7">
+            <stop stop-color="#FF0000" offset="0%"></stop>
+            <stop stop-color="#FF0000" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+        <filter x="-51.0%" y="-37.8%" width="202.0%" height="175.6%" filterUnits="objectBoundingBox" id="filter-8">
+            <feGaussianBlur stdDeviation="50" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="plugins" transform="translate(-749.000000, -110.000000)">
+            <g id="block" transform="translate(818.000000, 260.000000)">
+                <ellipse id="椭圆形" fill="url(#radialGradient-1)" opacity="0.049999997" filter="url(#filter-2)" cx="265.524116" cy="257" rx="146.096463" ry="197"></ellipse>
+                <ellipse id="椭圆形" fill="url(#radialGradient-3)" opacity="0.200000003" filter="url(#filter-4)" cx="259.337621" cy="320.5" rx="83.755627" ry="112.5"></ellipse>
+                <ellipse id="椭圆形" fill="url(#radialGradient-5)" opacity="0.149999991" filter="url(#filter-6)" cx="188.430868" cy="197.5" rx="107.073955" ry="144.5"></ellipse>
+                <ellipse id="椭圆形" fill="url(#radialGradient-7)" opacity="0.200000003" filter="url(#filter-8)" cx="414.951768" cy="198.5" rx="147.048232" ry="198.5"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>

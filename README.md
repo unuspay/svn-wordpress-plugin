@@ -4,7 +4,7 @@
 
 **1. Check out your repository** (download local copy):
 ```bash
-svn co https://plugins.svn.wordpress.org/your-plugin-slug my-local-dir
+svn co https://plugins.svn.wordpress.org/unuspay-crypto-payments-for-easy-digital-downloads my-local-dir
 ```
 
 **2. Navigate to your local directory**:
