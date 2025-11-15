@@ -1,4 +1,0 @@
-*** UnusPay Crypto Payments For Paid Memberships Pro Changelog ***
-
-2025-7-20 - version 1.0.0
-* Initial release
