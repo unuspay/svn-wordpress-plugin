@@ -93,7 +93,6 @@ try {
 - **Skill (project context)**: `docs/skills/unuspay-wp-plugin.md` — full repo layout, CI/CD details, editing rules, versioning gotchas. **Load this first when working in this repo.**
 - **Skill (release trigger)**: `docs/skills/release.md` — how to trigger the CD release pipeline via `gh workflow run`
 - **Guide**: `docs/base/_guide/svn-ci-cd.md` — what was built, architecture decisions, troubleshooting
-- **Plans**: `docs/plan/2026-05-20/svn-ci-cd/` — spec, impl plan, review packets
 - **CI workflow**: `.github/workflows/sync-trunk.yml` — trunk sync on push to main
 - **CD workflow**: `.github/workflows/release.yml` — release via manual dispatch
 - **Release script**: `scripts/release.sh` — auto-versioning + SVN tag + commit logic
