@@ -1,0 +1,116 @@
+name: Sync SVN Trunk
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: svn-pipeline
+  cancel-in-progress: false
+
+jobs:
+  sync-trunk:
+    name: Sync trunk/ to WordPress.org SVN
+    runs-on: ubuntu-latest
+    env:
+      PLUGIN_SLUG: unuspay-crypto-payments-for-easy-digital-downloads
+      SVN_URL: https://plugins.svn.wordpress.org/unuspay-crypto-payments-for-easy-digital-downloads/
+
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v4
+
+      - name: Install SVN
+        run: sudo apt-get update && sudo apt-get install -y subversion rsync
+
+      - name: Sparse SVN checkout
+        run: |
+          SVN_DIR="${HOME}/svn-${PLUGIN_SLUG}"
+          svn checkout --depth immediates "$SVN_URL" "$SVN_DIR"
+          cd "$SVN_DIR"
+          svn update --set-depth infinity trunk
+          svn update --set-depth infinity assets
+
+      - name: Sync files to SVN
+        run: |
+          SVN_DIR="${HOME}/svn-${PLUGIN_SLUG}"
+          echo "::group::Syncing trunk/"
+          rsync -rc --delete \
+            --exclude-from=".distignore" \
+            "${GITHUB_WORKSPACE}/trunk/" "${SVN_DIR}/trunk/"
+          echo "::endgroup::"
+
+          echo "::group::Syncing assets/"
+          rsync -rc --delete \
+            --exclude=".DS_Store" \
+            "${GITHUB_WORKSPACE}/assets/" "${SVN_DIR}/assets/"
+          echo "::endgroup::"
+
+      - name: Process SVN additions and deletions
+        run: |
+          SVN_DIR="${HOME}/svn-${PLUGIN_SLUG}"
+          cd "$SVN_DIR"
+
+          # Add all new files
+          svn add . --force > /dev/null 2>&1 || true
+
+          # Remove deleted files — safe loop with proper path handling
+          svn status | while IFS= read -r line; do
+            status="${line:0:1}"
+            path="${line:8}"
+            if [ "$status" = "!" ]; then
+              svn rm -- "$path" || true
+            fi
+          done
+
+      - name: Set MIME types on image assets
+        run: |
+          SVN_DIR="${HOME}/svn-${PLUGIN_SLUG}"
+          cd "$SVN_DIR"
+          if test -d assets && test -n "$(find assets -maxdepth 1 -name '*.png' -print -quit)"; then
+            svn propset svn:mime-type image/png assets/*.png || true
+          fi
+          if test -d assets && test -n "$(find assets -maxdepth 1 -name '*.jpg' -print -quit)"; then
+            svn propset svn:mime-type image/jpeg assets/*.jpg || true
+          fi
+          if test -d assets && test -n "$(find assets -maxdepth 1 -name '*.gif' -print -quit)"; then
+            svn propset svn:mime-type image/gif assets/*.gif || true
+          fi
+          if test -d assets && test -n "$(find assets -maxdepth 1 -name '*.svg' -print -quit)"; then
+            svn propset svn:mime-type image/svg+xml assets/*.svg || true
+          fi
+
+      - name: Check for changes and commit
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        run: |
+          SVN_DIR="${HOME}/svn-${PLUGIN_SLUG}"
+          cd "$SVN_DIR"
+
+          echo "::group::SVN status"
+          svn status
+          echo "::endgroup::"
+
+          if [ -z "$(svn status)" ]; then
+            echo "No changes to commit. Working tree clean."
+            exit 0
+          fi
+
+          svn update
+
+          # Check for conflicts after update
+          if svn status | grep -q '^C'; then
+            echo "ERROR: SVN conflict detected. Resolve manually."
+            svn status | grep '^C'
+            exit 1
+          fi
+
+          svn commit -m "Sync trunk from Git commit ${GITHUB_SHA:0:7}" \
+            --no-auth-cache \
+            --non-interactive \
+            --username "$SVN_USERNAME" \
+            --password "$SVN_PASSWORD"
+
+          echo "Trunk synced successfully."
