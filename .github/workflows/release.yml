@@ -1,0 +1,91 @@
+name: Release to WordPress.org
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (no commit)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+      version:
+        description: "Force version (leave empty for auto-increment, must be X.Y.Z)"
+        required: false
+        type: string
+
+concurrency:
+  group: svn-pipeline
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release new version
+    runs-on: ubuntu-latest
+    env:
+      SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+      SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+      DRY_RUN_INPUT: ${{ inputs.dry_run }}
+      VERSION_INPUT: ${{ inputs.version }}
+
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install SVN
+        run: sudo apt-get update && sudo apt-get install -y subversion rsync
+
+      - name: Run release script
+        id: release
+        run: |
+          args=()
+          if [ "$DRY_RUN_INPUT" = "true" ]; then
+            args+=(--dry-run)
+          fi
+          if [ -n "$VERSION_INPUT" ]; then
+            args+=(--version "$VERSION_INPUT")
+          fi
+          bash scripts/release.sh "${args[@]}"
+
+      - name: Push version bump back to Git
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          # Read the released version from the release script output (set via GITHUB_OUTPUT)
+          VERSION="${{ steps.release.outputs.released_version }}"
+
+          if [ -z "$VERSION" ]; then
+            echo "ERROR: No released_version from release script. Cannot push back to Git."
+            exit 1
+          fi
+
+          # Validate version is proper semver before using in sed/commit
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "ERROR: Released version '$VERSION' is not valid semver. Aborting Git push-back."
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Portable sed (temp-file approach)
+          sed_inplace() {
+            local pattern="$1"
+            local file="$2"
+            local tmp
+            tmp=$(mktemp)
+            sed -E "$pattern" "$file" > "$tmp" && mv "$tmp" "$file"
+          }
+
+          # Update Git trunk files to match the released version in SVN
+          sed_inplace "s/^([[:space:]]*\*[[:space:]]*Version:[[:space:]]*).*/\1${VERSION}/" \
+            trunk/unuspay-crypto-payments-for-easy-digital-downloads.php
+          sed_inplace "s/^Stable tag:[[:space:]]*.*/Stable tag: ${VERSION}/" \
+            trunk/readme.txt
+
+          git add trunk/unuspay-crypto-payments-for-easy-digital-downloads.php trunk/readme.txt
+          git diff --cached --quiet || git commit -m "chore(release): bump version to $VERSION"
+          git push
