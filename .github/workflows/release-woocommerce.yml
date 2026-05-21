@@ -91,6 +91,12 @@ jobs:
           git add woocommerce/trunk/unuspay-payments.php woocommerce/trunk/readme.txt
           git diff --cached --quiet || git commit -m "chore(release-woo): bump version to $VERSION"
           git push
+          if git ls-remote --tags origin "refs/tags/v${VERSION}-woo" | grep -q "v${VERSION}-woo"; then
+            echo "Tag v${VERSION}-woo already exists on remote — skipping."
+          else
+            git tag "v${VERSION}-woo"
+            git push origin "v${VERSION}-woo"
+          fi
 
       - name: Create GitHub Release
         if: ${{ inputs.dry_run != 'true' }}
