@@ -1,0 +1,35 @@
+{
+  "name": "unuspay/unuspay-sdk",
+  "description": "UnusPay SDK — Webhook signature verification",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "UnusPay\\SDK\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "UnusPay\\SDK\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "^8.0"
+  },
+  "require-dev": {
+    "pestphp/pest": "^2.0|^3.0",
+    "phpstan/phpstan": "^1.10|^2.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    },
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "scripts": {
+    "test": "vendor/bin/pest",
+    "phpstan": "vendor/bin/phpstan analyse src tests --level=max"
+  }
+}
