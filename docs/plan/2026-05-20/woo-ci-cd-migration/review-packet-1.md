@@ -25,9 +25,9 @@
 - **First Found:** round 1
 - **Status:** resolved
 - **Evidence:** Guide references `sync-trunk.yml`, `release.yml`, single-plugin paths
-- **Required Fix:** Add step in Task 10 to update or archive the guide
+- **Required Fix:** Add step in Task 10 to archive the guide (guide was later fully removed in cleanup)
 - **Consensus:** 2/2
-- **Re-check:** Verify Task 10 includes guide update step
+- **Re-check:** Verify Task 10 includes guide archive step
 
 ### F-1.3: Root `.svn/` cleanup not addressed
 - **Severity:** medium
@@ -68,8 +68,8 @@
 
 ### Fix for F-1.2
 - **After Fix:** resolved
-- **Change:** Added Step 5 to Task 10: update or archive `docs/base/_guide/svn-ci-cd.md`
-- **Regression Risk:** None — documentation-only change
+- **Change:** Added Step 5 to Task 10: archive `docs/base/_guide/svn-ci-cd.md`
+- **Regression Risk:** None — documentation-only change (guide was later fully removed in cleanup)
 
 ### Fix for F-1.4
 - **After Fix:** resolved

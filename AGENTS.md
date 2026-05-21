@@ -77,7 +77,6 @@ Each plugin has its version in TWO places (both updated automatically by release
 - **Skill (EDD)**: `docs/skills/edd.md` — EDD-specific paths, code style, release commands
 - **Skill (WooCommerce)**: `docs/skills/woocommerce.md` — Woo-specific paths, code style, release commands
 - **Skill (release)**: `docs/skills/release.md` — how to trigger release workflows
-- **Guide**: `docs/base/_guide/svn-ci-cd.md` — architecture decisions, troubleshooting
 - **EDD release workflow**: `.github/workflows/release-edd.yml`
 - **Woo release workflow**: `.github/workflows/release-woocommerce.yml`
 - **EDD release script**: `easy-digital-downloads/scripts/release.sh`

@@ -1028,7 +1028,7 @@
 
 **Files:**
 - Delete: `docs/skills/unuspay-wp-plugin.md` (replaced by `docs/skills/edd.md`)
-- Modify: `docs/base/_guide/svn-ci-cd.md` (update for multi-plugin model)
+- Modify: `docs/base/_guide/svn-ci-cd.md` (archive with migration note; later removed in cleanup)
 - Modify: `.gitignore`
 - Modify: `.distignore`
 
@@ -1059,24 +1059,19 @@
 
   `.distignore` stays as `.DS_Store` only. The rsync paths in release scripts already scope to `<plugin>/trunk/` and `<plugin>/assets/`, so root-level files are never synced. No changes needed.
 
-- [ ] **Step 5: Update `docs/base/_guide/svn-ci-cd.md`**
+- [ ] **Step 5: Archive `docs/base/_guide/svn-ci-cd.md`**
 
-  The existing guide references `sync-trunk.yml`, `release.yml`, and single-plugin paths. Update it to reflect:
-  - Multi-plugin layout (`easy-digital-downloads/`, `woocommerce/`)
-  - Release-only workflow model (no auto-sync)
-  - Per-plugin workflow names (`release-edd.yml`, `release-woocommerce.yml`)
-  - GitHub Release creation step
-
-  If the guide is too coupled to the old architecture, mark it as archival:
+  The existing guide references `sync-trunk.yml`, `release.yml`, and single-plugin paths. Add an archival note at top:
   ```
   > **Note:** This guide describes the original single-plugin CI/CD architecture.
   > For the current multi-plugin setup, see `docs/skills/edd.md` and `docs/skills/woocommerce.md`.
   ```
+  (This guide was later fully removed in a cleanup task.)
 
 - [ ] **Step 6: Commit**
   ```bash
   git add .gitignore docs/skills/unuspay-wp-plugin.md docs/base/_guide/svn-ci-cd.md
-  git commit -m "chore: remove old single-plugin skill, update guide, ignore tags/ in Git"
+  git commit -m "chore: remove old single-plugin skill, archive guide, ignore tags/ in Git"
   ```
 
 ---

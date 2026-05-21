@@ -100,9 +100,9 @@
 ### Task 10: Clean up root-level artifacts and update gitignore
 - **Subagent:** worker-5
 - **Status:** completed
-- **Validation:** `git status --short` → clean (only untracked `docs/plan/`); `git check-ignore easy-digital-downloads/tags woocommerce/tags` → PASS (both ignored); `head -5 docs/base/_guide/svn-ci-cd.md` → archival note at top; `cat .distignore` → `.DS_Store` only (unchanged); `ls easy-digital-downloads/tags/` → empty dir
+- **Validation:** `git status --short` → clean (only untracked `docs/plan/`); `git check-ignore easy-digital-downloads/tags woocommerce/tags` → PASS (both ignored); guide archived (later removed in cleanup); `cat .distignore` → `.DS_Store` only (unchanged); `ls easy-digital-downloads/tags/` → empty dir
 - **Timestamp:** 2026-05-20T23:56:00+08:00
-- **Notes:** Removed `docs/skills/unuspay-wp-plugin.md` (replaced by per-plugin skills), `git rm -r` EDD tags/ (11 files), recreated empty tag directories for both plugins. Updated `.gitignore` with `**/tags/`. Added archival note to `docs/base/_guide/svn-ci-cd.md` pointing to new skill files. `.distignore` kept unchanged as specified. Commit `c5956e1`.
+- **Notes:** Removed `docs/skills/unuspay-wp-plugin.md` (replaced by per-plugin skills), `git rm -r` EDD tags/ (11 files), recreated empty tag directories for both plugins. Updated `.gitignore` with `**/tags/`. Archived the guide with a note pointing to new skill files (guide later removed in cleanup). `.distignore` kept unchanged as specified. Commit `c5956e1`.
 
 ### Task 11: Verify dry run for EDD release
 - **Subagent:** worker-0 (coordinator)
