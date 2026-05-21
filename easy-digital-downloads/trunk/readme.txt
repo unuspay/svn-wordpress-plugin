@@ -1,6 +1,6 @@
 === UnusPay Crypto Payments For Easy Digital Downloads ===
 Contributors: unustech01
-Tags: crypto payment gateway, accept crypto, bitcoin, USDT, coinbase
+Tags: crypto payment gateway, accept crypto, bitcoin, USDT, USDC, stablecoin
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.2
