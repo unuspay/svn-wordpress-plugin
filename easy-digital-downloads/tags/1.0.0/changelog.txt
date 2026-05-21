@@ -1,4 +1,0 @@
-*** UnusPay Crypto Payments For Easy Digital Downloads Changelog ***
-
-2025-9-1 - version 1.0.0
-* Initial release
