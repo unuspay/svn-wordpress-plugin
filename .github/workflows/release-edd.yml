@@ -89,6 +89,12 @@ jobs:
           git add easy-digital-downloads/trunk/unuspay-crypto-payments-for-easy-digital-downloads.php easy-digital-downloads/trunk/readme.txt
           git diff --cached --quiet || git commit -m "chore(release-edd): bump version to $VERSION"
           git push
+          if git ls-remote --tags origin "refs/tags/v${VERSION}-edd" | grep -q "v${VERSION}-edd"; then
+            echo "Tag v${VERSION}-edd already exists on remote — skipping."
+          else
+            git tag "v${VERSION}-edd"
+            git push origin "v${VERSION}-edd"
+          fi
 
       - name: Create GitHub Release
         if: ${{ inputs.dry_run != 'true' }}
