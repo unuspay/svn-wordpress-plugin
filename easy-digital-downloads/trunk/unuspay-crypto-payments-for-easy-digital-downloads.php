@@ -12,7 +12,7 @@
  * Requires Plugins: easy-digital-downloads
  * Requires at least: 6.0
  * Requires PHP: 7.2
- * Version: 1.0.1
+ * Version: 1.0.2
  */
 
 // Exit if accessed directly
