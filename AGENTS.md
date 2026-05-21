@@ -44,7 +44,7 @@ Multi-plugin monorepo for UnusPay crypto payment gateway integrations. Each plug
 1. Edit plugin files in `<plugin>/trunk/`
 2. Commit and push to `main`
 3. Trigger release: `gh workflow run release-<plugin>.yml`
-4. Workflow: sync SVN trunk → bump version → create SVN tag → commit → push version bump to Git → create GitHub Release
+4. Workflow: sync SVN trunk → bump version → create SVN tag → SVN commit → push version bump to Git → create Git tag → create GitHub Release
 5. Users see the update within a few hours
 
 ### Version Locations
@@ -69,6 +69,7 @@ Each plugin has its version in TWO places (both updated automatically by release
 - **Concurrency is per-plugin** — `svn-pipeline-edd` and `svn-pipeline-woocommerce` run independently.
 - **Version auto-increment caps at 10** — `1.0.10` → `1.1.0` (not `1.0.11`). Major version is always manual.
 - **GitHub Release tags** — EDD uses `v{version}-edd`, WooCommerce uses `v{version}-woo` to avoid tag collisions.
+- **Git tags created on release** — the workflow tags the version bump commit and pushes the tag to origin. Tag creation is idempotent (skips if tag already exists).
 - **WooCommerce `vendor/` is shipped** — do NOT add to `.distignore`.
 </gotchas>
 

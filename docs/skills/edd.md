@@ -70,9 +70,12 @@ RUN_ID=$(gh run list --workflow=release-edd.yml --limit 1 --json databaseId --jq
 gh run watch "$RUN_ID"
 ```
 
+The release workflow: syncs SVN trunk → bumps version → creates SVN tag → commits to SVN → pushes version bump to Git `main` → creates Git tag `v{version}-edd` → creates GitHub Release with WP.org link.
+
 ## Gotchas
 
 - `widgets.bundle.js` is pre-built (9MB) — no build step in repo
 - Two `assets/` dirs: `trunk/assets/` (shipped to users) vs top-level `assets/` (WP.org directory page)
 - Empty catch block at line 293 — silently swallows errors
 - Version auto-increment caps at 10: `1.0.10` → `1.1.0`
+- `readme.txt` is the entry point for the WordPress.org plugin directory page — it controls the plugin page content (description, screenshots, FAQ, changelog). Must use WordPress readme format, not standard Markdown. Syntax reference: https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/

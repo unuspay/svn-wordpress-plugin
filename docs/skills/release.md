@@ -64,5 +64,6 @@ gh workflow run release-woocommerce.yml --field dry_run=true
 - Each plugin has its own release script at `<plugin>/scripts/release.sh`
 - SVN credentials must be set as GitHub secrets: `SVN_USERNAME`, `SVN_PASSWORD`
 - After release, version bump is pushed back to Git automatically
+- After release, a Git tag is created on the version bump commit (idempotent — skips if tag exists)
 - After release, a GitHub Release is created with a link to the WP.org plugin page
 - GitHub Release tags: `v{version}-edd` for EDD, `v{version}-woo` for WooCommerce

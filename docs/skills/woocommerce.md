@@ -82,10 +82,13 @@ RUN_ID=$(gh run list --workflow=release-woocommerce.yml --limit 1 --json databas
 gh run watch "$RUN_ID"
 ```
 
+The release workflow: syncs SVN trunk → bumps version → creates SVN tag → commits to SVN → pushes version bump to Git `main` → creates Git tag `v{version}-woo` → creates GitHub Release with WP.org link.
+
 ## Gotchas
 
 - `vendor/` is shipped to users — do NOT exclude in `.distignore`
 - Two version locations: `Version:` header AND `UNUSPAY_PAYMENTS_VERSION` constant — both must be updated
 - JPG banners (not PNG) — MIME type handling must cover `image/jpeg`
 - `Requires PHP: 8.0` — stricter than EDD's PHP 7.2+
-- Existing SVN tags: `1.0.0`, `1.0.1`, `1.1.0` — next auto-increment would be `1.1.1`
+- Existing SVN tags: `1.0.0`, `1.0.1`, `1.1.0`, `1.1.1` — next auto-increment would be `1.1.2`
+- `readme.txt` is the entry point for the WordPress.org plugin directory page — it controls the plugin page content (description, screenshots, FAQ, changelog). Must use WordPress readme format, not standard Markdown. Syntax reference: https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/
