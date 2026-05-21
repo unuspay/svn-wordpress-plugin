@@ -1,0 +1,102 @@
+name: Release EDD Plugin
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (no commit)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+      version:
+        description: "Force version (leave empty for auto-increment, must be X.Y.Z)"
+        required: false
+        type: string
+
+concurrency:
+  group: svn-pipeline-edd
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release EDD plugin
+    runs-on: ubuntu-latest
+    env:
+      PLUGIN_DIR: easy-digital-downloads
+      SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+      SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+      DRY_RUN_INPUT: ${{ inputs.dry_run }}
+      VERSION_INPUT: ${{ inputs.version }}
+
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install SVN
+        run: sudo apt-get update && sudo apt-get install -y subversion rsync
+
+      - name: Run release script
+        id: release
+        run: |
+          args=()
+          if [ "$DRY_RUN_INPUT" = "true" ]; then
+            args+=(--dry-run)
+          fi
+          if [ -n "$VERSION_INPUT" ]; then
+            args+=(--version "$VERSION_INPUT")
+          fi
+          bash easy-digital-downloads/scripts/release.sh "${args[@]}"
+
+      - name: Push version bump back to Git
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          VERSION="${{ steps.release.outputs.released_version }}"
+
+          if [ -z "$VERSION" ]; then
+            echo "ERROR: No released_version from release script."
+            exit 1
+          fi
+
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "ERROR: Released version '$VERSION' is not valid semver."
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          sed_inplace() {
+            local pattern="$1"
+            local file="$2"
+            local tmp
+            tmp=$(mktemp)
+            sed -E "$pattern" "$file" > "$tmp" && mv "$tmp" "$file"
+          }
+
+          sed_inplace "s/^([[:space:]]*\*[[:space:]]*Version:[[:space:]]*).*/\1${VERSION}/" \
+            easy-digital-downloads/trunk/unuspay-crypto-payments-for-easy-digital-downloads.php
+          sed_inplace "s/^Stable tag:[[:space:]]*.*/Stable tag: ${VERSION}/" \
+            easy-digital-downloads/trunk/readme.txt
+
+          git add easy-digital-downloads/trunk/unuspay-crypto-payments-for-easy-digital-downloads.php easy-digital-downloads/trunk/readme.txt
+          git diff --cached --quiet || git commit -m "chore(release-edd): bump version to $VERSION"
+          git push
+
+      - name: Create GitHub Release
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          VERSION="${{ steps.release.outputs.released_version }}"
+          gh release create "v${VERSION}-edd" \
+            --title "EDD v${VERSION}" \
+            --notes "https://wordpress.org/plugins/unuspay-crypto-payments-for-easy-digital-downloads/" \
+            --repo "${{ github.repository }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
