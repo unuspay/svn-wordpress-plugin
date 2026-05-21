@@ -101,7 +101,7 @@ jobs:
         if: ${{ inputs.dry_run != 'true' }}
         run: |
           VERSION="${{ steps.release.outputs.released_version }}"
-          PREV_TAG=$(git tag -l "v*-edd" --sort=-version:refname | head -1)
+          PREV_TAG=$(git tag -l "v*-edd" --sort=-version:refname | grep -v "v${VERSION}-edd" | head -1)
           if [ -n "$PREV_TAG" ]; then
             CHANGELOG=$(git log "${PREV_TAG}.." --pretty=format:"- %s (%h)" --no-merges -- "easy-digital-downloads/")
           else
