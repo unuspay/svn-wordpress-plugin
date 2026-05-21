@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Unuspay Crypto Payments for WooCommerce
  * Plugin URI: https://unuspay.com
- * Description: Accept cryptocurrency payments in WooCommerce through Unuspay hosted checkout.
+ * Description: Accept cryptocurrency payments in WooCommerce through Unuspay hosted checkout. Support for 1000+ cryptocurrencies.
  * Version: 1.1.0
  * Author: Unuspay
  * Author URI: https://unuspay.com
