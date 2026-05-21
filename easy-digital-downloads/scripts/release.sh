@@ -7,6 +7,7 @@ SVN_URL="https://plugins.svn.wordpress.org/${PLUGIN_SLUG}/"
 PLUGIN_FILE="trunk/unuspay-crypto-payments-for-easy-digital-downloads.php"
 README_FILE="trunk/readme.txt"
 SVN_DIR="${HOME}/svn-${PLUGIN_SLUG}"
+GIT_PLUGIN_DIR="easy-digital-downloads"
 SEMVER_REGEX='^[0-9]+\.[0-9]+\.[0-9]+$'
 
 # === Portable sed ===
@@ -57,6 +58,27 @@ cd "$SVN_DIR"
 svn update --set-depth infinity trunk
 svn update --set-depth infinity assets
 svn update --set-depth immediates tags
+
+# === Sync from Git to SVN ===
+echo "==> Syncing trunk/ from Git to SVN..."
+rsync -rc --delete \
+  --exclude-from="${GITHUB_WORKSPACE}/.distignore" \
+  "${GITHUB_WORKSPACE}/${GIT_PLUGIN_DIR}/trunk/" "${SVN_DIR}/trunk/"
+
+echo "==> Syncing assets/ from Git to SVN..."
+rsync -rc --delete \
+  --exclude=".DS_Store" \
+  "${GITHUB_WORKSPACE}/${GIT_PLUGIN_DIR}/assets/" "${SVN_DIR}/assets/"
+
+# Process SVN additions and deletions
+svn add . --force > /dev/null 2>&1 || true
+svn status | while IFS= read -r line; do
+  status="${line:0:1}"
+  path="${line:8}"
+  if [ "$status" = "!" ]; then
+    svn rm -- "$path" || true
+  fi
+done
 
 # === Read current version ===
 CURRENT_VERSION=$(grep -iE '^[[:space:]]*\*?[[:space:]]*Version:[[:space:]]*[0-9]' "$PLUGIN_FILE" | head -1 | sed -E 's/.*Version:[[:space:]]*//' | tr -d '[:space:]')
